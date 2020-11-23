@@ -1,0 +1,6 @@
+name: 'WoltLab Suite Package Creation'
+description: 'GitHub action to create a package for WoltLab Suite Core.'
+author: 'KittMedia'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
