@@ -4,3 +4,6 @@ author: 'KittMedia'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+branding:
+  icon: 'package'
+  color: 'blue'
