@@ -29,7 +29,7 @@ tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_p
 if [ ! -d ~/.ssh ]; then
 	mkdir ~/.ssh
 	chmod 700 ~/.ssh
-done
+fi
 
 cat > ~/.ssh/known-hosts <<EOL
 $KNOWN_HOSTS
