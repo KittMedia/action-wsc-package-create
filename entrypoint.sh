@@ -25,9 +25,12 @@ done
 echo -en "\n"
 tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
 
-# Create directory if needed
+# Create directory
+echo "Create directory ${REMOTE_PATH_BASE#*/}${GITHUB_REPOSITORY#*/}${GITHUB_SHA}"
 ssh ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p ${REMOTE_PATH_BASE#*/}${GITHUB_REPOSITORY#*/}${GITHUB_SHA}"
+
 # Store artifact package via SSH
+echo "Upload ${PACKAGE_NAME}.tar.gz to ${REMOTE_PATH_BASE#*/}${GITHUB_REPOSITORY#*/}${GITHUB_SHA}"
 scp ${PACKAGE_NAME}.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH_BASE#*/}${GITHUB_REPOSITORY#*/}${GITHUB_SHA}
 
 exit 0
