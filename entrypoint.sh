@@ -31,13 +31,13 @@ if [ ! -d ~/.ssh ]; then
 	chmod 700 ~/.ssh
 fi
 
-ssh-keyscan -H ${REMOTE_HOST} > ~/.ssh/known_hosts
-chmod 644 ~/.ssh/known_hosts
-
-cat > ~/.ssh/id_deploy_key <<EOL
-$SSH_PRIVATE_KEY
+cat > ~/.ssh/known-hosts <<EOL
+$KNOWN_HOSTS
 EOL
 
+chmod 644 ~/.ssh/known_hosts
+
+printf "$s" "${SSH_PRIVATE_KEY}" > ~/.ssh/id_deploy_key
 chmod 600 ~/.ssh/id_deploy_key
 
 # Create directory
