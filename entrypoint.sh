@@ -31,13 +31,10 @@ if [ ! -d ~/.ssh ]; then
 	chmod 700 ~/.ssh
 fi
 
-cat > ~/.ssh/known-hosts <<EOL
-$KNOWN_HOSTS
-EOL
-
+printf "%s" "${KNOWN_HOSTS}" > ~/.ssh/known-hosts
 chmod 644 ~/.ssh/known_hosts
 
-printf "$s" "${SSH_PRIVATE_KEY}" > ~/.ssh/id_deploy_key
+printf "%s" "${SSH_PRIVATE_KEY}" > ~/.ssh/id_deploy_key
 chmod 600 ~/.ssh/id_deploy_key
 
 # Create directory
