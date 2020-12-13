@@ -32,10 +32,14 @@ if [ ! -d ~/.ssh ]; then
 fi
 
 ssh-keyscan -H ${REMOTE_HOST} > ~/.ssh/known_hosts
+chmod 644 ~/.ssh/known_hosts
+cat ~/.ssh/known_hosts
 
 cat > ~/.ssh/id_deploy_key <<EOL
 $SSH_PRIVATE_KEY
 EOL
+
+chmod 600 ~/.ssh/id_deploy_key
 
 # Create directory
 echo "Create directory /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
