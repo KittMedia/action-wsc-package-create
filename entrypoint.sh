@@ -26,23 +26,25 @@ echo -en "\n"
 tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
 
 # Prepare SSH
-if [ ! -d ~/.ssh ]; then
-	mkdir ~/.ssh
-	chmod 700 ~/.ssh
-fi
+#if [ ! -d ~/.ssh ]; then
+#	mkdir ~/.ssh
+#	chmod 700 ~/.ssh
+#fi
 
-printf "%s" "${KNOWN_HOSTS}" > ~/.ssh/known-hosts
-chmod 644 ~/.ssh/known_hosts
+#printf "%s" "${KNOWN_HOSTS}" > ~/.ssh/known-hosts
+#chmod 644 ~/.ssh/known_hosts
 
-printf "%s" "${SSH_PRIVATE_KEY}" > ~/.ssh/id_deploy_key
-chmod 600 ~/.ssh/id_deploy_key
+#printf "%s" "${SSH_PRIVATE_KEY}" > ~/.ssh/id_deploy_key
+#chmod 600 ~/.ssh/id_deploy_key
 
 # Create directory
 echo -e "Create directory /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
-ssh -v -i ~/.ssh/id_deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
+#ssh -v -i ~/.ssh/id_deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
+ssh -v ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
 
 # Store artifact package via SSH
 echo -e "Upload ${PACKAGE_NAME}.tar.gz to /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
-scp -v -i ~/.ssh/id_deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts ${PACKAGE_NAME}.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:/${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}
+#scp -v -i ~/.ssh/id_deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts ${PACKAGE_NAME}.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:/${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}
+scp -v ${PACKAGE_NAME}.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:/${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}
 
 exit 0
