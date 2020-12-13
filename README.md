@@ -4,7 +4,7 @@ Creates a valid package for WoltLab Suite.
 
 ## Usage and restrictions
 
-Due to restrictions of GitHub Actions, the package itself is only attached to releases. If you need the for every commit, you can, for instance, send them via SSH/SCP. To do so, follow these instructions:
+Due to restrictions of GitHub Actions, the package itself cannot be accessed directly. If you need the for every commit, you can, for instance, send them via SSH/SCP. To do so, follow these instructions:
 
 ### Variables
 
