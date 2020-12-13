@@ -31,7 +31,7 @@ if [ ! -d ~/.ssh ]; then
 	chmod 700 ~/.ssh
 fi
 
-ssh-keyscan -H ${{ secrets.REMOTE_HOST }} > ~/.ssh/known_hosts
+ssh-keyscan -H ${REMOTE_HOST} > ~/.ssh/known_hosts
 
 cat > ~/.ssh/id_deploy_key <<EOL
 $SSH_PRIVATE_KEY
