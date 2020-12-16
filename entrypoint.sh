@@ -25,9 +25,4 @@ done
 echo -en "\n"
 tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
 
-# Store artifact package via SSH
-echo -e "Upload ${PACKAGE_NAME}.tar.gz to /${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}"
-scp -v -i ~/.ssh/id_deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts ${PACKAGE_NAME}.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:/${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}
-#scp -v ${PACKAGE_NAME}.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:/${REMOTE_PATH_BASE#*/}/${GITHUB_REPOSITORY#*/}/${GITHUB_SHA}
-
 exit 0

@@ -2,37 +2,28 @@
 
 Creates a valid package for WoltLab Suite.
 
-## Usage and restrictions
+## Usage
 
-Due to restrictions of GitHub Actions, the package itself cannot be accessed directly. If you need the for every commit, you can, for instance, send them via SSH/SCP. To do so, follow these instructions:
+Just add this action to your workflow to generate a package called <repository-name>.tar.gz in your root directory.
 
-### Variables
+### Upload as artifact
 
-#### KNOWN_HOSTS
+```yaml
+name: build package
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: WoltLab Suite Package Creation
+        uses: KittMedia/action-wsc-package-create@v1
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.event.repository.name }}.tar.gz
+          path: ${{ github.event.repository.name }}.tar.gz
+```
 
-Get a known host via `ssh-keyscan example.com`.
-
-#### REMOTE_PATH_BASE
-
-The path where the package should be uploaded.
-
-#### REMOTE_HOST
-
-Set your remote host, e. g. `example.com`.
-
-#### REMOTE_USER
-
-Set your remote user, e. g. `root` (please, do not!).
-
-#### SSH_PRIVATE_KEY
-
-Generate a private key with `ssh-keygen -m PEM -t rsa -b 4096`.
-
-Make sure the public key is set on the target server in the `known_hosts` file of SSH.
-
-### Building action
-
-To build your action, you can use the following template:
+### Upload to remote server
 
 ```yaml
 name: build package
@@ -54,6 +45,30 @@ jobs:
 ```
 
 The package will then be uploaded to the remote host specified in the directory `<remote path>/repo-name/sha-hash/repo-name.tar.gz`.
+
+#### Variables
+
+##### KNOWN_HOSTS
+
+Get a known host via `ssh-keyscan example.com`.
+
+##### REMOTE_PATH_BASE
+
+The path where the package should be uploaded.
+
+##### REMOTE_HOST
+
+Set your remote host, e. g. `example.com`.
+
+##### REMOTE_USER
+
+Set your remote user, e. g. `root` (please, do not!).
+
+##### SSH_PRIVATE_KEY
+
+Generate a private key with `ssh-keygen -m PEM -t rsa -b 4096`.
+
+Make sure the public key is set on the target server in the `known_hosts` file of SSH.
 
 ## License
 
