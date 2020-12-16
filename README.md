@@ -4,7 +4,7 @@ Creates a valid package for WoltLab Suite.
 
 ## Usage
 
-Just add this action to your workflow to generate a package called <repository-name>.tar.gz in your root directory.
+Just add this action to your workflow to generate a package called `<repository-name>.tar.gz` in your root directory.
 
 ### Upload as artifact
 
