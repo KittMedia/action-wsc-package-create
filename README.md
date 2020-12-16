@@ -15,6 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: WoltLab Suite Package Creation
         uses: KittMedia/action-wsc-package-create@v1
       - uses: actions/upload-artifact@v2
@@ -33,13 +34,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: WoltLab Suite Package Creation
+        uses: KittMedia/action-wsc-package-create@v1
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      - name: WoltLab Suite Package Creation
-        uses: KittMedia/action-wsc-package-create@v1
       - run: ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "mkdir -p ${{ secrets.REMOTE_PATH_BASE }}/${{ github.event.repository.name }}/${{ github.sha }}"
       - run: scp ${{ github.event.repository.name }}.tar.gz ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_PATH_BASE }}/${{ github.event.repository.name }}/${{ github.sha }}
 ```
