@@ -1,7 +1,7 @@
 FROM debian:stable-slim
 
 RUN apt-get update \
-	&& apt-get install -y tar composer \
+	&& apt-get install -y tar composer php-curl \
 	&& apt-get clean -y \
 	&& rm -rf /var/lib/apt/lists/*
 
