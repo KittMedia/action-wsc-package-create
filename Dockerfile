@@ -1,8 +1,8 @@
 FROM debian:stable-slim
 
 RUN apt-get update \
-	&& apt-get install -y tar php-cli php-curl php-mbstring \
-	&& apt-get clean -y \
+	&& apt install -y tar composer php-cli php-curl php-mbstring \
+	&& apt clean -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install latest version of Composer
