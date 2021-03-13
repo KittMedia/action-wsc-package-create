@@ -6,6 +6,8 @@ RUN apt-get update \
 	&& apt remove -y composer \
 	&& rm -rf /var/lib/apt/lists/*
 
+RUN which composer
+
 # Install latest version of Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 	&& php -r "if (hash_file('sha384', 'composer-setup.php') === file_get_contents('https://composer.github.io/installer.sig')) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
@@ -13,6 +15,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 	&& mv composer.phar /usr/bin/composer \
 	&& chmod +x /usr/bin/composer \
 	&& php -r "unlink('composer-setup.php');"
+
+RUN which composer
 
 COPY entrypoint.sh /entrypoint.sh
 
