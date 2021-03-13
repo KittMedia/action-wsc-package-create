@@ -14,8 +14,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 	&& chmod +x /usr/bin/composer \
 	&& php -r "unlink('composer-setup.php');"
 
-RUN which composer && composer --version
-
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
