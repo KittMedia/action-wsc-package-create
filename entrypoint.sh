@@ -87,13 +87,13 @@ else
 fi
 
 if [ "${PACKAGE_TYPE}" = "requirement" ]; then
-  if [ $DO_COMPRESS ]; then
+  if [ "${DO_COMPRESS}" = true ]; then
     mv ${PACKAGE_NAME}.tar.gz requirements/
   else
     mv ${PACKAGE_NAME}.tar requirements/
   fi
 elif [ "${PACKAGE_TYPE}" = "optional" ]; then
-  if [ $DO_COMPRESS ]; then
+  if [ "${DO_COMPRESS}" = true ]; then
     mv ${PACKAGE_NAME}.tar.gz optionals/
   else
     mv ${PACKAGE_NAME}.tar optionals/
