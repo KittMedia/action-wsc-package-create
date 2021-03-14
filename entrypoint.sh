@@ -34,6 +34,8 @@ if [ -e "requirements" ]; then
   for PACKAGE in *; do
     ./entrypoint.sh $PACKAGE false
   done
+  
+  cd ..
 fi
 
 if [ -e "optionals" ]; then
@@ -43,6 +45,8 @@ if [ -e "optionals" ]; then
   for PACKAGE in *; do
     ./entrypoint.sh $PACKAGE false
   done
+  
+  cd ..
 fi
 
 if [ $DO_COMPRESS ]; then
