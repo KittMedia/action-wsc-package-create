@@ -4,6 +4,7 @@
 DO_COMPRESS=${2%/}
 ENTRYPOINT=$(realpath $0)
 GIVEN_PACKAGE_NAME="${1%/}"
+PACKAGE_TYPE=${3%/}
 
 if [ -z $DO_COMPRESS ]; then
   DO_COMPRESS=true
@@ -17,6 +18,13 @@ fi
 
 [ -z $PACKAGE_NAME ] && exit 1
 cd $GITHUB_WORKSPACE
+
+if [ $PACKAGE_TYPE == "requirement" ] && [ -e "requirements/${PACKAGE_NAME}/" ]; then
+  cd requirements/${PACKAGE_NAME}/
+else if [ $PACKAGE_TYPE == "optional" ] && [ -e "optionals/${PACKAGE_NAME}/" ]; then
+  cd optionals/${PACKAGE_NAME}/
+fi
+
 ls -l
 test -e composer.json && echo -e "\nComposer installation\n-----------" && composer install
 test -e acptemplate && echo -e "\nBuilding acptemplate.tar\n-------------------------" && cd acptemplate && tar cvf ../acptemplate.tar --exclude=.git* * && cd ..
@@ -34,7 +42,7 @@ if [ -e "requirements" ]; then
   cd requirements/
   
   for PACKAGE in *; do
-    $ENTRYPOINT $PACKAGE false
+    $ENTRYPOINT $PACKAGE false requirement
   done
   
   cd ..
@@ -45,10 +53,14 @@ if [ -e "optionals" ]; then
   cd optionals/
   
   for PACKAGE in *; do
-    $ENTRYPOINT $PACKAGE false
+    $ENTRYPOINT $PACKAGE false optional
   done
   
   cd ..
+fi
+
+if [ ! -z "$PACKAGE_TYPE" ]; then
+  cd $GITHUB_WORKSPACE
 fi
 
 if [ $DO_COMPRESS ]; then
