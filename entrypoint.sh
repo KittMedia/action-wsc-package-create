@@ -21,7 +21,7 @@ cd $GITHUB_WORKSPACE
 
 if [ $PACKAGE_TYPE == "requirement" ] && [ -e "requirements/${PACKAGE_NAME}/" ]; then
   cd requirements/${PACKAGE_NAME}/
-else if [ $PACKAGE_TYPE == "optional" ] && [ -e "optionals/${PACKAGE_NAME}/" ]; then
+elif [ $PACKAGE_TYPE == "optional" ] && [ -e "optionals/${PACKAGE_NAME}/" ]; then
   cd optionals/${PACKAGE_NAME}/
 fi
 
