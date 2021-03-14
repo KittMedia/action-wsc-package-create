@@ -46,6 +46,7 @@ if [ -e "requirements" ]; then
     $ENTRYPOINT $PACKAGE requirement
   done
   
+  find -mindepth 1 -maxdepth 1 -type d -exec rm -r {} \;
   cd ..
 fi
 
@@ -57,6 +58,7 @@ if [ -e "optionals" ]; then
     $ENTRYPOINT $PACKAGE optional
   done
   
+  find -mindepth 1 -maxdepth 1 -type d -exec rm -r {} \;
   cd ..
 fi
 
