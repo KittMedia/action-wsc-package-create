@@ -86,15 +86,15 @@ fi
 
 if [ "${PACKAGE_TYPE}" = "requirement" ]; then
   if [ "${DO_COMPRESS}" = true ]; then
-    mv ${PACKAGE_NAME}.tar.gz requirements/
+    mv ${PACKAGE_NAME}.tar.gz ${GITHUB_WORKSPACE}requirements/
   else
-    mv ${PACKAGE_NAME}.tar requirements/
+    mv ${PACKAGE_NAME}.tar ${GITHUB_WORKSPACE}requirements/
   fi
 elif [ "${PACKAGE_TYPE}" = "optional" ]; then
   if [ "${DO_COMPRESS}" = true ]; then
-    mv ${PACKAGE_NAME}.tar.gz optionals/
+    mv ${PACKAGE_NAME}.tar.gz ${GITHUB_WORKSPACE}optionals/
   else
-    mv ${PACKAGE_NAME}.tar optionals/
+    mv ${PACKAGE_NAME}.tar ${GITHUB_WORKSPACE}optionals/
   fi
 fi
 
