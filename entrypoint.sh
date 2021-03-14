@@ -2,6 +2,7 @@
 # Build a valid WCF package
 
 DO_COMPRESS=${2%/}
+ENTRYPOINT=$(realpath $0)
 GIVEN_PACKAGE_NAME="${1%/}"
 
 if [ -z $DO_COMPRESS ]; then
@@ -32,7 +33,7 @@ if [ -e "requirements" ]; then
   cd requirements/
   
   for PACKAGE in *; do
-    ./entrypoint.sh $PACKAGE false
+    $ENTRYPOINT $PACKAGE false
   done
   
   cd ..
@@ -43,7 +44,7 @@ if [ -e "optionals" ]; then
   cd optionals/
   
   for PACKAGE in *; do
-    ./entrypoint.sh $PACKAGE false
+    $ENTRYPOINT $PACKAGE false
   done
   
   cd ..
@@ -58,7 +59,7 @@ if [ $DO_COMPRESS ]; then
   done
   
   echo -en "\n"
-  tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
+  tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=requirements/*/ --exclude=optionals/*/ *
 else
   echo -e "\nBuilding $PACKAGE_NAME.tar"
   echo -n "-------------"
@@ -68,7 +69,7 @@ else
   done
   
   echo -en "\n"
-  tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
+  tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=requirements/*/ --exclude=optionals/*/ *
 fi
 
 exit 0
