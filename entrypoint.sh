@@ -62,10 +62,6 @@ if [ -e "optionals" ]; then
   cd ..
 fi
 
-if [ ! -z "$PACKAGE_TYPE" ]; then
-  cd $GITHUB_WORKSPACE
-fi
-
 if [ "${DO_COMPRESS}" = true ]; then
   echo -e "\nBuilding $PACKAGE_NAME.tar.gz"
   echo -n "----------------"
