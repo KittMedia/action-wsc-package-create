@@ -8,8 +8,10 @@ if [ -z $DO_COMPRESS ]; then
   DO_COMPRESS=true
 fi
 
-if [ ! -z "$GIVEN_PACKAGE_NAME" ]; then
+if [ -z "$GIVEN_PACKAGE_NAME" ]; then
   PACKAGE_NAME=${GITHUB_REPOSITORY#*/}
+else
+  PACKAGE_NAME=${GIVEN_PACKAGE_NAME}
 fi
 
 [ -z $PACKAGE_NAME ] && exit 1
