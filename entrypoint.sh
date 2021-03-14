@@ -20,9 +20,9 @@ fi
 [ -z $PACKAGE_NAME ] && exit 1
 cd $GITHUB_WORKSPACE
 
-if [ "${PACKAGE_TYPE}" = "requirement" ] && [ -e "requirements/${PACKAGE_NAME}/" ]; then
+if [ "${PACKAGE_TYPE}" = "requirement" ]; then
   cd requirements/${PACKAGE_NAME}/
-elif [ "${PACKAGE_TYPE}" = "optional" ] && [ -e "optionals/${PACKAGE_NAME}/" ]; then
+elif [ "${PACKAGE_TYPE}" = "optional" ]; then
   cd optionals/${PACKAGE_NAME}/
 fi
 
@@ -46,7 +46,7 @@ if [ -e "requirements" ]; then
     $ENTRYPOINT $PACKAGE requirement
   done
   
-  find -mindepth 1 -maxdepth 1 -type d -exec rm -r {} \;
+  rm -r */
   cd ..
 fi
 
@@ -58,7 +58,7 @@ if [ -e "optionals" ]; then
     $ENTRYPOINT $PACKAGE optional
   done
   
-  find -mindepth 1 -maxdepth 1 -type d -exec rm -r {} \;
+  rm -r */
   cd ..
 fi
 
@@ -75,7 +75,7 @@ if [ "${DO_COMPRESS}" = true ]; then
   done
   
   echo -en "\n"
-  tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=requirements/*/ --exclude=optionals/*/ *
+  tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
 else
   echo -e "\nBuilding $PACKAGE_NAME.tar"
   echo -n "-------------"
@@ -85,7 +85,7 @@ else
   done
   
   echo -en "\n"
-  tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=requirements/*/ --exclude=optionals/*/ *
+  tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* *
 fi
 
 if [ "${PACKAGE_TYPE}" = "requirement" ]; then
