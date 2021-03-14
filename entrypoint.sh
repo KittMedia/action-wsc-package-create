@@ -27,6 +27,7 @@ test -e files_preinstall && echo -e "\nBuilding files_preinstall.tar\n----------
 test -e files_wcf && echo -e "\nBuilding files_wcf.tar\n---------------------" && cd files_wcf && tar cvf ../files_wcf.tar --exclude=.git* * && cd ..
 test -e template && echo -e "\nBuilding template.tar\n----------------------" && cd template && tar cvf ../template.tar --exclude=.git* * && cd ..
 test -e templates && echo -e "\nBuilding templates.tar\n----------------------" && cd templates && tar cvf ../templates.tar --exclude=.git* * && cd ..
+test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n------------------" && cd templates_wcf && tar cvf ../templates_wcf.tar --exclude=.git* * && cd ..
 
 if [ -e "requirements" ]; then
   echo -e "\nBuilding requirements\n---------------------"
