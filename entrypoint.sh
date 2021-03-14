@@ -1,12 +1,13 @@
 #!/bin/bash
 # Build a valid WCF package
 
-DO_COMPRESS=${2%/}
 ENTRYPOINT=$(realpath $0)
 GIVEN_PACKAGE_NAME="${1%/}"
-PACKAGE_TYPE=${3%/}
+PACKAGE_TYPE=${2%/}
 
-if [ -z $DO_COMPRESS ]; then
+if [ ! -z "${PACKAGE_TYPE}" ]; then
+  DO_COMPRESS=false
+else
   DO_COMPRESS=true
 fi
 
@@ -19,9 +20,9 @@ fi
 [ -z $PACKAGE_NAME ] && exit 1
 cd $GITHUB_WORKSPACE
 
-if [ $PACKAGE_TYPE == "requirement" ] && [ -e "requirements/${PACKAGE_NAME}/" ]; then
+if [ "${PACKAGE_TYPE}" = "requirement" ] && [ -e "requirements/${PACKAGE_NAME}/" ]; then
   cd requirements/${PACKAGE_NAME}/
-elif [ $PACKAGE_TYPE == "optional" ] && [ -e "optionals/${PACKAGE_NAME}/" ]; then
+elif [ "${PACKAGE_TYPE}" = "optional" ] && [ -e "optionals/${PACKAGE_NAME}/" ]; then
   cd optionals/${PACKAGE_NAME}/
 fi
 
@@ -35,14 +36,14 @@ test -e files_preinstall && echo -e "\nBuilding files_preinstall.tar\n----------
 test -e files_wcf && echo -e "\nBuilding files_wcf.tar\n---------------------" && cd files_wcf && tar cvf ../files_wcf.tar --exclude=.git* * && cd ..
 test -e template && echo -e "\nBuilding template.tar\n----------------------" && cd template && tar cvf ../template.tar --exclude=.git* * && cd ..
 test -e templates && echo -e "\nBuilding templates.tar\n----------------------" && cd templates && tar cvf ../templates.tar --exclude=.git* * && cd ..
-test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n------------------" && cd templates_wcf && tar cvf ../templates_wcf.tar --exclude=.git* * && cd ..
+test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n------------------_" && cd templates_wcf && tar cvf ../templates_wcf.tar --exclude=.git* * && cd ..
 
 if [ -e "requirements" ]; then
   echo -e "\nBuilding requirements\n---------------------"
   cd requirements/
   
   for PACKAGE in *; do
-    $ENTRYPOINT $PACKAGE false requirement
+    $ENTRYPOINT $PACKAGE requirement
   done
   
   cd ..
@@ -53,7 +54,7 @@ if [ -e "optionals" ]; then
   cd optionals/
   
   for PACKAGE in *; do
-    $ENTRYPOINT $PACKAGE false optional
+    $ENTRYPOINT $PACKAGE optional
   done
   
   cd ..
@@ -63,7 +64,7 @@ if [ ! -z "$PACKAGE_TYPE" ]; then
   cd $GITHUB_WORKSPACE
 fi
 
-if [ $DO_COMPRESS ]; then
+if [ "${DO_COMPRESS}" = true ]; then
   echo -e "\nBuilding $PACKAGE_NAME.tar.gz"
   echo -n "----------------"
   
@@ -83,6 +84,20 @@ else
   
   echo -en "\n"
   tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=requirements/*/ --exclude=optionals/*/ *
+fi
+
+if [ "${PACKAGE_TYPE}" = "requirement" ]; then
+  if [ $DO_COMPRESS ]; then
+    mv ${PACKAGE_NAME}.tar.gz requirements/
+  else
+    mv ${PACKAGE_NAME}.tar requirements/
+  fi
+elif [ "${PACKAGE_TYPE}" = "optional" ]; then
+  if [ $DO_COMPRESS ]; then
+    mv ${PACKAGE_NAME}.tar.gz optionals/
+  else
+    mv ${PACKAGE_NAME}.tar optionals/
+  fi
 fi
 
 exit 0
