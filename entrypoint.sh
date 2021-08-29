@@ -17,6 +17,7 @@ else
   PACKAGE_NAME=${GIVEN_PACKAGE_NAME}
 fi
 
+echo "GitHub Repository: ${GITHUB_REPOSITORY}"
 echo "Package Name: ${PACKAGE_NAME}"
 echo "Package Type: ${PACKAGE_TYPE}"
 
@@ -28,9 +29,11 @@ cd $GITHUB_WORKSPACE
 if [ "${PACKAGE_TYPE}" = "requirement" ]; then
 	echo "enter requirements/${PACKAGE_NAME}/"
   cd requirements/${PACKAGE_NAME}/
+  ls -l
 elif [ "${PACKAGE_TYPE}" = "optional" ]; then
 	echo "enter optionals/${PACKAGE_NAME}/"
   cd optionals/${PACKAGE_NAME}/
+  ls -l
 fi
 
 ls -l
@@ -48,8 +51,10 @@ test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n----------------
 if [ -e "requirements" ]; then
   echo -e "\nBuilding requirements\n---------------------"
   cd requirements/
+  ls -l
   
   for PACKAGE in *; do
+  	echo "Building required package ${PACKAGE}"
     $ENTRYPOINT $PACKAGE "requirement"
   done
   
@@ -60,8 +65,10 @@ fi
 if [ -e "optionals" ]; then
   echo -e "\nBuilding optionals\n------------------"
   cd optionals/
+  ls -l
   
   for PACKAGE in *; do
+  	echo "Building optional package ${PACKAGE}"
     $ENTRYPOINT $PACKAGE "optional"
   done
   
