@@ -17,12 +17,19 @@ else
   PACKAGE_NAME=${GIVEN_PACKAGE_NAME}
 fi
 
+echo "Package Name: ${PACKAGE_NAME}"
+echo "Package Type: ${PACKAGE_TYPE}"
+
 [ -z $PACKAGE_NAME ] && exit 1
+echo "enter ${GITHUB_WORKSPACE}"
 cd $GITHUB_WORKSPACE
 
+
 if [ "${PACKAGE_TYPE}" = "requirement" ]; then
+	echo "enter requirements/${PACKAGE_NAME}/"
   cd requirements/${PACKAGE_NAME}/
 elif [ "${PACKAGE_TYPE}" = "optional" ]; then
+	echo "enter optionals/${PACKAGE_NAME}/"
   cd optionals/${PACKAGE_NAME}/
 fi
 
@@ -33,17 +40,17 @@ test -e acptemplates && echo -e "\nBuilding acptemplates.tar\n------------------
 test -e file && echo -e "\nBuilding file.tar\n------------------" && cd file && tar cvf ../file.tar --exclude=.git* * && cd ..
 test -e files && echo -e "\nBuilding files.tar\n------------------" && cd files && tar cvf ../files.tar --exclude=.git* * && cd ..
 test -e files_preinstall && echo -e "\nBuilding files_preinstall.tar\n-----------------------------" && cd files_preinstall && tar cvf ../files_preinstall.tar --exclude=.git* * && cd ..
-test -e files_wcf && echo -e "\nBuilding files_wcf.tar\n---------------------" && cd files_wcf && tar cvf ../files_wcf.tar --exclude=.git* * && cd ..
+test -e files_wcf && echo -e "\nBuilding files_wcf.tar\n----------------------" && cd files_wcf && tar cvf ../files_wcf.tar --exclude=.git* * && cd ..
 test -e template && echo -e "\nBuilding template.tar\n----------------------" && cd template && tar cvf ../template.tar --exclude=.git* * && cd ..
 test -e templates && echo -e "\nBuilding templates.tar\n----------------------" && cd templates && tar cvf ../templates.tar --exclude=.git* * && cd ..
-test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n------------------_" && cd templates_wcf && tar cvf ../templates_wcf.tar --exclude=.git* * && cd ..
+test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n-------------------" && cd templates_wcf && tar cvf ../templates_wcf.tar --exclude=.git* * && cd ..
 
 if [ -e "requirements" ]; then
   echo -e "\nBuilding requirements\n---------------------"
   cd requirements/
   
   for PACKAGE in *; do
-    $ENTRYPOINT $PACKAGE requirement
+    $ENTRYPOINT $PACKAGE "requirement"
   done
   
   rm -r */
@@ -55,7 +62,7 @@ if [ -e "optionals" ]; then
   cd optionals/
   
   for PACKAGE in *; do
-    $ENTRYPOINT $PACKAGE optional
+    $ENTRYPOINT $PACKAGE "optional"
   done
   
   rm -r */
