@@ -85,7 +85,7 @@ if [ "${DO_COMPRESS}" = true ]; then
   done
   
   echo -en "\n"
-  tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package* --exclude=tsconfig.json --exclude=ts/ *
+  tar cvfz ${PACKAGE_NAME}.tar.gz --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package*.json --exclude=tsconfig.json --exclude=ts *
 else
   echo -e "\nBuilding $PACKAGE_NAME.tar"
   echo -n "-------------"
@@ -95,7 +95,7 @@ else
   done
   
   echo -en "\n"
-  tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package* --exclude=tsconfig.json --exclude=ts/ *
+  tar cvf ${PACKAGE_NAME}.tar --exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package*.json --exclude=tsconfig.json --exclude=ts *
 fi
 
 if [ "${PACKAGE_TYPE}" = "requirement" ]; then
