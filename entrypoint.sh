@@ -4,7 +4,8 @@
 ENTRYPOINT=$(realpath $0)
 GIVEN_PACKAGE_NAME="${1%/}"
 PACKAGE_TYPE=${2%/}
-TAR_EXCLUDES="--exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package*.json --exclude=tsconfig.json --exclude=ts --exclude='./acp/style/*.scss'"
+TAR_EXCLUDES="--exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package*.json --exclude=tsconfig.json --exclude=ts"
+TAR_EXCLUDES_FILES="--exclude=.git* --exclude=/*.css --exclude=/style/*.css --exclude=acp/style/*.scss"
 
 if [ ! -z "${PACKAGE_TYPE}" ]; then
   DO_COMPRESS=false
@@ -41,10 +42,10 @@ ls -l
 test -e composer.json && echo -e "\nComposer installation\n-----------" && composer install
 test -e acptemplate && echo -e "\nBuilding acptemplate.tar\n-------------------------" && cd acptemplate && tar cvf ../acptemplate.tar --exclude=.git* * && cd ..
 test -e acptemplates && echo -e "\nBuilding acptemplates.tar\n-------------------------" && cd acptemplates && tar cvf ../acptemplates.tar --exclude=.git* * && cd ..
-test -e file && echo -e "\nBuilding file.tar\n------------------" && cd file && tar cvf ../file.tar --exclude=.git* --exclude=/*.css --exclude=/style/*.css * && cd ..
-test -e files && echo -e "\nBuilding files.tar\n------------------" && cd files && tar cvf ../files.tar --exclude=.git* --exclude=/*.css --exclude=/style/*.css * && cd ..
-test -e files_preinstall && echo -e "\nBuilding files_preinstall.tar\n-----------------------------" && cd files_preinstall && tar cvf ../files_preinstall.tar --exclude=.git* * && cd ..
-test -e files_wcf && echo -e "\nBuilding files_wcf.tar\n----------------------" && cd files_wcf && tar cvf ../files_wcf.tar --exclude=.git* * && cd ..
+test -e file && echo -e "\nBuilding file.tar\n------------------" && cd file && tar cvf ../file.tar $TAR_EXCLUDES_FILES * && cd ..
+test -e files && echo -e "\nBuilding files.tar\n------------------" && cd files && tar cvf ../files.tar --exclude=.git* $TAR_EXCLUDES_FILES * && cd ..
+test -e files_preinstall && echo -e "\nBuilding files_preinstall.tar\n-----------------------------" && cd files_preinstall && tar cvf ../files_preinstall.tar $TAR_EXCLUDES_FILES* * && cd ..
+test -e files_wcf && echo -e "\nBuilding files_wcf.tar\n----------------------" && cd files_wcf && tar cvf ../files_wcf.tar $TAR_EXCLUDES_FILES * && cd ..
 test -e template && echo -e "\nBuilding template.tar\n----------------------" && cd template && tar cvf ../template.tar --exclude=.git* * && cd ..
 test -e templates && echo -e "\nBuilding templates.tar\n----------------------" && cd templates && tar cvf ../templates.tar --exclude=.git* * && cd ..
 test -e templates_wcf && echo -e "\nBuilding templates_wcf.tar\n-------------------" && cd templates_wcf && tar cvf ../templates_wcf.tar --exclude=.git* * && cd ..
