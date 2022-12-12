@@ -4,7 +4,7 @@
 ENTRYPOINT=$(realpath $0)
 GIVEN_PACKAGE_NAME="${1%/}"
 PACKAGE_TYPE=${2%/}
-TAR_EXCLUDES="--exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=composer* --exclude=.es* --exclude=.prettier* --exclude=package*.json --exclude=tsconfig.json --exclude=ts"
+TAR_EXCLUDES="--exclude=file --exclude=files --exclude=files_preinstall --exclude=files_wcf --exclude=acptemplate --exclude=acptemplates --exclude=template --exclude=templates --exclude=wcf-buildscripts --exclude=README* --exclude=CHANGELOG --exclude=LICENSE --exclude=.git* --exclude=.es* --exclude=.prettier* --exclude=package*.json --exclude=tsconfig.json --exclude=ts"
 TAR_EXCLUDES_FILES="--exclude=.git* --exclude=/*.css --exclude=/style/*.css --exclude=acp/style/*.scss"
 
 if [ ! -z "${PACKAGE_TYPE}" ]; then
